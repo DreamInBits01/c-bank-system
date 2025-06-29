@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 // read out from the file, write into file
-#define READ_FROM_FILE "(Name:%[^,], age:%d)"
-#define WRITE_INTO_FILE "(Name:%s, age:%d)\n"
+#define READ_FROM_FILE "(name:%[^,], password:%[^,], age:%d)"
+#define WRITE_INTO_FILE "(name:%s, password:%s, age:%d)\n"
 #define USERNAME_BUFFER 31
 #define PASSWORD_BUFFER 51
 int option;
@@ -78,12 +78,13 @@ Person find_user(char username[USERNAME_BUFFER])
 };
 void save_user(const Person const *person)
 {
-    FILE *file = fopen("users.txt", "w\n");
-    if (file != NULL)
+    FILE *file = fopen("users.txt", "a");
+    if (file == NULL)
     {
-        perror("Error while saving the user...\n");
+        printf("Error while saving the user...\n");
+        return;
     };
-    fprintf(file, WRITE_INTO_FILE, person->name, person->age);
+    fprintf(file, WRITE_INTO_FILE, person->name, person->password, person->age);
     printf("User is saved successfuly\n");
     fclose(file);
 };
@@ -91,4 +92,5 @@ void main()
 {
     Person person = create_user();
     printf("Added person -> %s, %s, %d", person.name, person.password, person.age);
+    save_user(&person);
 }
