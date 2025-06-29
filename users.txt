@@ -1,2 +1,1 @@
-(name:mohammed, password:password, age:205)
-(name:ahmed, password:password, age:205)
+name:moh, password:moh, age:205
