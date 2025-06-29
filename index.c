@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 // read out from the file, write into file
-#define READ_FROM_FILE "name:%[^,],"
+#define READ_USER_FROM_FILE "name:%[^,], password:%[^,], age:%d\n"
+#define READ_USERNAME_FROM_FILE "name:%[^,],"
 #define WRITE_INTO_FILE "name:%s, password:%s, age:%d\n"
 #define USERNAME_BUFFER 31
 #define PASSWORD_BUFFER 51
@@ -64,37 +65,29 @@ Person create_user()
     write_field_prompt(person.password, "password", PASSWORD_BUFFER, 9);
     return person;
 };
-// int find_user(const char username[USERNAME_BUFFER])
-// {
-//     FILE *file = fopen("users.txt", "r");
-//     if (file == NULL)
-//     {
-//         printf("Error While opening the file...\n");
-//     }
-//     fseek(file, 0, SEEK_SET);
-//     char found_name[USERNAME_BUFFER];
-//     int fscanf_result;
-//     int compare_result;
-//     while (fscanf(file, READ_FROM_FILE, found_name) == 1)
-//     {
-//         // Skip the rest of the line
-//         int c;
-//         while ((c = fgetc(file)) != '\n' && c != EOF)
-//         {
-//         }
-//         if (strcmp(found_name, username) == 0)
-//         {
-//             compare_result = 1;
-//             break;
-//         }
-//     }
-//     // fscanf_result = fscanf(file, READ_FROM_FILE, found_name);
-//     // fclose(file);
-//     // compare_result = strcmp(found_name, username);
-//     // zero means they are equal else they are not;
-//     return compare_result == 0 ? 1 : 0;
-// };
-int find_user(const char username[USERNAME_BUFFER])
+Person get_user_info(const char username[USERNAME_BUFFER])
+{
+    FILE *file = fopen("users.txt", "r");
+    Person person;
+    if (file == NULL)
+    {
+        printf("Error while opening the file (get_user_info)");
+        return person;
+    };
+    int fscanf_result;
+    fscanf_result = fscanf(file, READ_USER_FROM_FILE, person.name, person.password, &person.age);
+    while (fscanf_result == 3)
+    {
+        if (strcmp(person.name, username) == 0)
+        {
+            break;
+        };
+        fscanf_result = fscanf(file, READ_USER_FROM_FILE, person.name, person.password, &person.age);
+    };
+    fclose(file);
+    return person;
+};
+int does_user_exist(const char username[USERNAME_BUFFER])
 {
     FILE *file = fopen("users.txt", "r");
     if (file == NULL)
@@ -102,28 +95,15 @@ int find_user(const char username[USERNAME_BUFFER])
         printf("Error While opening the file...\n");
         return 0;
     }
-    char found_name[USERNAME_BUFFER];
     int found = 0;
-    int fscanf_result;
-    fscanf_result = fscanf(file, READ_FROM_FILE, found_name);
-    while (fscanf_result == 1)
+    Person person = get_user_info(username);
+    if (strcmp(person.name, username) == 0)
     {
-        int character = fgetc(file);
-        while (character != '\n' && character != EOF)
-        {
-            character = fgetc(file);
-        }
-        if (strcmp(found_name, username) == 0)
-        {
-            found = 1;
-            break;
-        };
-        fscanf_result = fscanf(file, READ_FROM_FILE, found_name);
-    }
+        found = 1;
+    };
     fclose(file);
     return found;
 }
-
 void save_user(const Person const *person)
 {
     FILE *file = fopen("users.txt", "a");
@@ -132,9 +112,8 @@ void save_user(const Person const *person)
         printf("Error while saving the user...\n");
         return;
     };
-    int does_user_exist = find_user(person->name);
-    printf("user %d\n", does_user_exist);
-    if (does_user_exist)
+    int does_user_exist_result = does_user_exist(person->name);
+    if (does_user_exist_result)
     {
         printf("Username is already taken\n");
         return;
@@ -148,4 +127,6 @@ void main()
     Person person = create_user();
     printf("Added person -> %s, %s, %d\n", person.name, person.password, person.age);
     save_user(&person);
+    Person founded = get_user_info(person.name);
+    printf("founded %s", founded.name);
 }
