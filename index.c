@@ -202,7 +202,8 @@ int main()
             else
             {
                 printf("Error while creating a user!\n");
-            }
+            };
+            break;
         case 'Q':
             keep_running = false;
             exit(0);
