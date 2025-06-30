@@ -22,10 +22,11 @@ typedef struct
 } AuthResult;
 void flush_stdin(void)
 {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF)
+    int c = getchar();
+    while (c != '\n' && c != EOF)
     {
-    }
+        c = getchar();
+    };
 }
 bool write_field_prompt(
     char *field_content,            // The actual field data
@@ -61,11 +62,7 @@ bool write_field_prompt(
         // that could affect the next input
         printf("Warning: %s was truncated\n", display_name_buffer);
         // Clear remaining input from stdin
-        int c = getchar();
-        while (c != '\n' && c != EOF)
-        {
-            c = getchar();
-        };
+        flush_stdin();
     };
     if (written_length > 0 && *last_char_in_field == '\n')
     {
@@ -108,7 +105,6 @@ Person get_user_info(const char username[USERNAME_BUFFER])
     fclose(file);
     return person;
 };
-
 int does_user_exist(const char username[USERNAME_BUFFER])
 {
     FILE *file = fopen("users.txt", "r");
