@@ -1,5 +1,5 @@
 #include "include/utils.h"
-#include "include/auth.h"
+#include "include/user.h"
 
 Person get_user_info(const char username[USERNAME_BUFFER])
 {
