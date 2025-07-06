@@ -8,7 +8,6 @@
 #define WRITE_USER_INTO_FILE "name:%s, password:%s, age:%d\n"
 #define USERNAME_BUFFER 31
 #define PASSWORD_BUFFER 51
-int option;
 typedef struct
 {
     char name[USERNAME_BUFFER];
@@ -20,7 +19,7 @@ typedef struct
     Person person;
     bool is_valid;
 } AuthResult;
-void flush_stdin(void)
+void flush_stdin()
 {
     int c = getchar();
     while (c != '\n' && c != EOF)
@@ -105,7 +104,7 @@ Person get_user_info(const char username[USERNAME_BUFFER])
     fclose(file);
     return person;
 };
-int does_user_exist(const char username[USERNAME_BUFFER])
+bool does_user_exist(const char username[USERNAME_BUFFER])
 {
     FILE *file = fopen("users.txt", "r");
     if (file == NULL)
@@ -168,6 +167,9 @@ int main()
         printf("----OPTIONS----\n");
         printf("----L for Login----\n");
         printf("----R for Register----\n");
+        printf("----D for Deposit----\n");
+        printf("----T for Transfer----\n");
+        printf("----D for Withdraw----\n");
         printf("----Q for Quit----\n");
         scanf(" %c", &option);
 
