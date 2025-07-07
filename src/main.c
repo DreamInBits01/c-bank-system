@@ -47,6 +47,9 @@ int main()
                 printf("Error while creating a user!\n");
             };
             break;
+        case 'T':
+            transfer(name);
+            break;
         case 'Q':
             keep_running = false;
             exit(0);

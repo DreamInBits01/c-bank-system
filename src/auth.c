@@ -25,5 +25,9 @@ AuthResult create_user()
     {
         register_result.is_valid = false;
     }
+    else
+    {
+        register_result.is_valid = true;
+    }
     return register_result;
 };
