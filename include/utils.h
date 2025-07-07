@@ -5,6 +5,7 @@
 #define WRITE_USER_INTO_FILE "name:%s, password:%s, age:%d\n"
 #define USERNAME_BUFFER 31
 #define PASSWORD_BUFFER 51
+#define DB_PATH "db/"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>

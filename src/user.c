@@ -3,7 +3,7 @@
 
 bool does_user_exist(const char username[USERNAME_BUFFER])
 {
-    FILE *file = fopen("users.txt", "r");
+    FILE *file = fopen("db/users.txt", "r");
     if (file == NULL)
     {
         printf("Error While opening the file...\n");
@@ -20,7 +20,7 @@ bool does_user_exist(const char username[USERNAME_BUFFER])
 }
 Person get_user_info(const char username[USERNAME_BUFFER])
 {
-    FILE *file = fopen("users.txt", "r");
+    FILE *file = fopen("db/users.txt", "r");
     Person person;
     if (file == NULL)
     {
@@ -42,7 +42,7 @@ Person get_user_info(const char username[USERNAME_BUFFER])
 };
 void save_user(const Person *person)
 {
-    FILE *file = fopen("users.txt", "a");
+    FILE *file = fopen("db/users.txt", "a");
     if (file == NULL)
     {
         printf("Error while saving the user...\n");

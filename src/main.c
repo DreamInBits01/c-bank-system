@@ -1,5 +1,4 @@
-#include "auth.h"
-#include <stdlib.h>
+#include "main.h"
 int main()
 {
     int keep_running = true;
@@ -9,6 +8,7 @@ int main()
     printf("Welcome to the bank system\n");
     while (keep_running)
     {
+        sleep(1);
         printf("----OPTIONS----\n");
         printf("----L for Login----\n");
         printf("----R for Register----\n");

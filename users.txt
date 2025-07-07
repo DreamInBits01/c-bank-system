@@ -1,5 +1,0 @@
-name:moh, password:password, age:205
-name:Mohammed, password:password, age:205
-name:ali, password:ali, age:205
-name:L, password:L, age:205
-name:mohammed, password:password, age:205
