@@ -7,6 +7,7 @@
 #define PASSWORD_BUFFER 51
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 void flush_stdin();
 bool write_field_prompt(
     char *field_content,            // The actual field data

@@ -4,6 +4,8 @@
         "*.layout-template": "vue",
         "*.vue": "vue",
         "utils.h": "c",
-        "auth.h": "c"
+        "auth.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c"
     }
 }

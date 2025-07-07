@@ -1,6 +1,23 @@
-#include "include/utils.h"
-#include "include/user.h"
+#include "utils.h"
+#include "user.h"
 
+bool does_user_exist(const char username[USERNAME_BUFFER])
+{
+    FILE *file = fopen("users.txt", "r");
+    if (file == NULL)
+    {
+        printf("Error While opening the file...\n");
+        return 0;
+    }
+    bool found = false;
+    Person person = get_user_info(username);
+    if (strcmp(person.name, username) == 0)
+    {
+        found = true;
+    };
+    fclose(file);
+    return found;
+}
 Person get_user_info(const char username[USERNAME_BUFFER])
 {
     FILE *file = fopen("users.txt", "r");
@@ -23,7 +40,7 @@ Person get_user_info(const char username[USERNAME_BUFFER])
     fclose(file);
     return person;
 };
-void save_user(const Person const *person)
+void save_user(const Person *person)
 {
     FILE *file = fopen("users.txt", "a");
     if (file == NULL)

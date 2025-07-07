@@ -7,7 +7,7 @@ typedef struct
     char password[PASSWORD_BUFFER];
     int age;
 } Person;
+bool does_user_exist(const char username[USERNAME_BUFFER]);
 Person get_user_info(const char username[USERNAME_BUFFER]);
-void save_user(const Person const *person);
-
+void save_user(const Person *person);
 #endif

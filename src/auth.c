@@ -1,10 +1,9 @@
-#include "include/utils.h"
-#include "include/auth.h"
+#include "utils.h"
+#include "auth.h"
 AuthResult login(char username[USERNAME_BUFFER], char password[PASSWORD_BUFFER])
 {
     AuthResult login;
     login.person = get_user_info(username);
-    int success = 0;
     if (strcmp(login.person.password, password) == 0)
     {
         login.is_valid = true;
