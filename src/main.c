@@ -17,7 +17,6 @@ int main()
         printf("----D for Withdraw----\n");
         printf("----Q for Quit----\n");
         scanf(" %c", &option);
-
         switch (option)
         {
         case 'L':

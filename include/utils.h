@@ -5,6 +5,7 @@
 #define WRITE_USER_INTO_FILE "name:%s, password:%s, age:%d, amount:%d\n"
 #define USERNAME_BUFFER 31
 #define PASSWORD_BUFFER 51
+#define USER_FIELDS_NUMBER 4
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
