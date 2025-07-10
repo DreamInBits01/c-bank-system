@@ -12,4 +12,5 @@ bool does_user_exist(const char username[USERNAME_BUFFER]);
 Person get_user_info(const char username[USERNAME_BUFFER]);
 void save_user(const Person *person);
 bool transfer(const char from[USERNAME_BUFFER]);
+void view_balance(char username[USERNAME_BUFFER]);
 #endif

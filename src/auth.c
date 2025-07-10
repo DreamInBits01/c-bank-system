@@ -4,7 +4,7 @@ AuthResult login(char username[USERNAME_BUFFER], char password[PASSWORD_BUFFER])
 {
     AuthResult login = {0};
     login.person = get_user_info(username);
-    if (strcmp(login.person.password, password) == 0)
+    if (strcmp(login.person.name, username) == 0 && strcmp(login.person.password, password) == 0)
     {
         login.is_valid = true;
     }

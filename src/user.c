@@ -154,3 +154,23 @@ bool transfer(const char from[USERNAME_BUFFER])
 
     return true;
 }
+void view_balance(char username[USERNAME_BUFFER])
+{
+    if (username[0] == '\0')
+    {
+        printf("Please enter a username!\n");
+        fflush(stdout);
+        return;
+    }
+    Person user = get_user_info(username);
+    if (user.name[0] == '\0')
+    {
+        printf("User was not found!\n");
+        fflush(stdout);
+    }
+    else
+    {
+        printf("Your balance is %d\n", user.amount);
+        fflush(stdout);
+    };
+}

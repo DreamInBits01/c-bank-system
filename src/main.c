@@ -13,10 +13,13 @@ int main()
         printf("----L for Login----\n");
         printf("----R for Register----\n");
         printf("----D for Deposit----\n");
+        printf("----V for Viewing balance----\n");
         printf("----T for Transfer----\n");
         printf("----D for Withdraw----\n");
         printf("----Q for Quit----\n");
+        fflush(stdout);
         scanf(" %c", &option);
+
         switch (option)
         {
         case 'L':
@@ -45,6 +48,9 @@ int main()
             {
                 printf("Error while creating a user!\n");
             };
+            break;
+        case 'V':
+            view_balance(name);
             break;
         case 'T':
             transfer(name);
