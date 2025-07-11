@@ -36,7 +36,7 @@ bool write_field_prompt(
         last_char_in_field = field_content;
         field_content++;
     }
-    if (written_length == max_field_length - 1 && *last_char_in_field != '\n')
+    if (written_length > max_field_length - 1 && *last_char_in_field != '\n')
     {
         // User wrote characters bigger than the buffer so there are characters left in the std input
         // that could affect the next input
