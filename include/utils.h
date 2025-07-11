@@ -17,4 +17,6 @@ bool write_field_prompt(
     size_t max_field_length,        // Maximum length for the field
     size_t display_name_buffer_size // Size of the name buffer
 );
+bool user_not_logged_in(char *username);
+bool user_logged_in(char *username);
 #endif

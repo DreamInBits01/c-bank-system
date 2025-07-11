@@ -50,3 +50,21 @@ bool write_field_prompt(
     };
     return true;
 }
+bool user_logged_in(char *username)
+{
+    if (*username != '\0')
+    {
+        return true;
+    }
+    else
+        return false;
+}
+bool user_not_logged_in(char *username)
+{
+    if (*username == '\0')
+    {
+        return true;
+    }
+    else
+        return false;
+}

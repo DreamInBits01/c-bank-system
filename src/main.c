@@ -9,14 +9,7 @@ int main()
     while (keep_running)
     {
         sleep(1);
-        printf("----OPTIONS----\n");
-        printf("----L for Login----\n");
-        printf("----R for Register----\n");
-        printf("----D for Deposit----\n");
-        printf("----V for Viewing balance----\n");
-        printf("----T for Transfer----\n");
-        printf("----D for Withdraw----\n");
-        printf("----Q for Quit----\n");
+        print_options();
         fflush(stdout);
         scanf(" %c", &option);
 
@@ -25,16 +18,21 @@ int main()
         case 'L':
             printf("----Login was selected----\n");
             flush_stdin();
+            if (user_logged_in(name))
+            {
+                printf(USER_LOGGED_IN_ERROR);
+                continue;
+            }
             write_field_prompt(name, "name", USERNAME_BUFFER, 5);
             write_field_prompt(password, "password", PASSWORD_BUFFER, 9);
             AuthResult login_result = login(name, password);
             if (login_result.is_valid)
             {
-                printf("Logged in successfuly with the credentials (name:%s, password:%s)\n", name, password);
+                printf(USER_LOGGED_IN, name, password);
             }
             else
             {
-                printf("Error while logging in, please check your credentials (name:%s, password:%s)\n", name, password);
+                printf(LOGIN_ERROR, name, password);
             }
             break;
         case 'R':
@@ -46,7 +44,7 @@ int main()
             }
             else
             {
-                printf("Error while creating a user!\n");
+                printf(REGISTER_ERROR);
             };
             break;
         case 'V':
@@ -59,8 +57,22 @@ int main()
             keep_running = false;
             exit(0);
         default:
-            printf("Please select a valid option\n");
+            printf(INVALID_OPTION);
             break;
         }
     }
+}
+void print_options()
+{
+    printf("+-----------------+----------------------+\n");
+    printf("|     Option      |       Action         |\n");
+    printf("+-----------------+----------------------+\n");
+    printf("| L               | Login                |\n");
+    printf("| R               | Register             |\n");
+    printf("| D               | Deposit              |\n");
+    printf("| V               | View Balance         |\n");
+    printf("| T               | Transfer             |\n");
+    printf("| W               | Withdraw             |\n");
+    printf("| Q               | Quit                 |\n");
+    printf("+-----------------+----------------------+\n");
 }
