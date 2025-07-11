@@ -31,3 +31,21 @@ AuthResult create_user()
     }
     return register_result;
 };
+void save_user(const Person *person)
+{
+    FILE *file = fopen("db/users.txt", "a");
+    if (file == NULL)
+    {
+        printf("Error while saving the user...\n");
+        return;
+    };
+    int does_user_exist_result = does_user_exist(person->name);
+    if (does_user_exist_result)
+    {
+        printf("Username is already taken\n");
+        return;
+    }
+    fprintf(file, WRITE_USER, person->name, person->password, person->age, 0);
+    printf("User is saved successfuly\n");
+    fclose(file);
+};

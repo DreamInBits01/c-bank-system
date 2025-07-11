@@ -1,8 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
-#define READ_USER_FROM_FILE "name:%[^,], password:%[^,], age:%d, amount:%d\n"
-#define READ_USERNAME_FROM_FILE "name:%[^,],"
-#define WRITE_USER_INTO_FILE "name:%s, password:%s, age:%d, amount:%d\n"
+#define READ_USER "name:%[^,], password:%[^,], age:%d, amount:%d"
+#define WRITE_USER "name:%s, password:%s, age:%d, amount:%d\n"
+#define READ_TRANSACTION "from:%[^,], to:%[^,], amount:%d, date:%[^,]"
+#define WRITE_TRANSACTION "from:%s, to:%s, amount:%d, date:%s\n"
 #define USERNAME_BUFFER 31
 #define PASSWORD_BUFFER 51
 #define USER_FIELDS_NUMBER 4

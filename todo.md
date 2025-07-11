@@ -4,4 +4,3 @@
 []:# Add a feature to view transaction history
 []:# Implement a feature to delete user accounts
 []:# Implement a feature to change user passwords
-[]:# Add a feature to view account balance without transferring money

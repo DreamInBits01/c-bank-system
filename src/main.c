@@ -3,8 +3,8 @@ int main()
 {
     int keep_running = true;
     char option;
-    char name[USERNAME_BUFFER];
-    char password[PASSWORD_BUFFER];
+    char name[USERNAME_BUFFER] = "mohammed";
+    char password[PASSWORD_BUFFER] = "password";
     printf("Welcome to the bank system\n");
     while (keep_running)
     {

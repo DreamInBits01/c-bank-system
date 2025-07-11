@@ -25,7 +25,7 @@ Person get_user_info(const char username[USERNAME_BUFFER])
     {
         int fields_read = sscanf(
             line_buffer,
-            READ_USER_FROM_FILE,
+            READ_USER,
             person.name,
             person.password,
             &person.age,
@@ -38,33 +38,37 @@ Person get_user_info(const char username[USERNAME_BUFFER])
     fclose(users);
     return person;
 };
-void save_user(const Person *person)
-{
-    FILE *file = fopen("db/users.txt", "a");
-    if (file == NULL)
-    {
-        printf("Error while saving the user...\n");
-        return;
-    };
-    int does_user_exist_result = does_user_exist(person->name);
-    if (does_user_exist_result)
-    {
-        printf("Username is already taken\n");
-        return;
-    }
-    fprintf(file, WRITE_USER_INTO_FILE, person->name, person->password, person->age, 0);
-    printf("User is saved successfuly\n");
-    fclose(file);
-};
 bool transfer(const char from[USERNAME_BUFFER])
 {
     // change to use a struct and return an error message
     bool success = false;
-    // person how'll get poor
+    // person how'll get poorer
     Person whom_transfering = get_user_info(from);
     if (whom_transfering.amount == 0)
     {
         printf("Your amount is zero! \\:\n");
+        fflush(stdout);
+        success = false;
+        return success;
+    }
+
+    flush_stdin();
+    char transfer_to[USERNAME_BUFFER];
+    int amount;
+    char line_buffer[256];
+    write_field_prompt(transfer_to, "Name To Transfer to", USERNAME_BUFFER, 20);
+    if (strcmp(whom_transfering.name, transfer_to) == 0)
+    {
+        printf("You can't transfer to yourself \\:\n");
+        fflush(stdout);
+        success = false;
+        return success;
+    }
+    printf("Enter an amount\n");
+    scanf("%d", &amount);
+    if (whom_transfering.amount < amount)
+    {
+        printf("The amount choosen is bigger than your amount \\:\n");
         fflush(stdout);
         success = false;
         return success;
@@ -75,36 +79,13 @@ bool transfer(const char from[USERNAME_BUFFER])
     {
         printf("Error while opening files");
     };
-    flush_stdin();
-    char transfer_to[USERNAME_BUFFER];
-    int amount;
-    char line_buffer[256];
-    write_field_prompt(transfer_to, "Name To Transfer to", USERNAME_BUFFER, 20);
-    if (strcmp(whom_transfering.name, transfer_to) == 0)
-    {
-        printf("You can't transfer to yourself \\:\n");
-        fflush(stdout);
-        // cleanup_transfer(users, temp);
-        success = false;
-        return success;
-    }
-    printf("Enter an amount\n");
-    scanf("%d", &amount);
-    if (whom_transfering.amount < amount)
-    {
-        printf("The amount choosen is bigger than your amount \\:\n");
-        fflush(stdout);
-        // cleanup_transfer(users, temp);
-        success = false;
-        return success;
-    }
     // person how'll get rich
     Person current_user = {0};
     while (fgets(line_buffer, sizeof(line_buffer), users))
     {
         int fields_read = sscanf(
             line_buffer,
-            READ_USER_FROM_FILE,
+            READ_USER,
             current_user.name,
             current_user.password,
             &current_user.age,
@@ -114,7 +95,7 @@ bool transfer(const char from[USERNAME_BUFFER])
             int current_user_new_amount = current_user.amount + amount;
             fprintf(
                 temp,
-                WRITE_USER_INTO_FILE,
+                WRITE_USER,
                 current_user.name,
                 current_user.password,
                 current_user.age,
@@ -126,7 +107,7 @@ bool transfer(const char from[USERNAME_BUFFER])
             int current_user_new_amount = current_user.amount - amount;
             fprintf(
                 temp,
-                WRITE_USER_INTO_FILE,
+                WRITE_USER,
                 current_user.name,
                 current_user.password,
                 current_user.age,
@@ -144,8 +125,21 @@ bool transfer(const char from[USERNAME_BUFFER])
     }
     else
     {
+        FILE *transactions = fopen("db/transactions.txt", "a");
+        if (transactions == NULL)
+        {
+            printf("Error while opening transactions file \\:\n");
+            success = false;
+            fflush(stdout);
+        }
+        time_t now = time(NULL);
+        struct tm *local_time = localtime(&now);
+        char transaction_date_buffer[64];
+        strftime(transaction_date_buffer, sizeof(transaction_date_buffer), "%Y-%m-%d %H:%M:%S", local_time);
+        fprintf(transactions, WRITE_TRANSACTION, from, transfer_to, amount, transaction_date_buffer);
         printf("Success! Amount:%d was transfered to:%s\n", amount, transfer_to);
         fflush(stdout);
+        fclose(transactions);
     }
     fclose(users);
     fclose(temp);

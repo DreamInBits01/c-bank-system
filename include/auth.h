@@ -9,4 +9,6 @@ typedef struct
 } AuthResult;
 AuthResult login(char username[USERNAME_BUFFER], char password[PASSWORD_BUFFER]);
 AuthResult create_user();
+void save_user(const Person *person);
+
 #endif
