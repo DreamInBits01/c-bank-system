@@ -2,6 +2,7 @@
 #include "user.h"
 #include "error_messages.h"
 #include "success_messages.h"
+#include "printf_macros.h"
 bool does_user_exist(const char username[USERNAME_BUFFER])
 {
     bool success = false;
@@ -47,7 +48,7 @@ bool transfer(const char from[USERNAME_BUFFER])
     Person whom_transfering = get_user_info(from);
     if (whom_transfering.amount == 0)
     {
-        printf(TRANSACTION_AMOUNT_ZERO);
+        PRINT_ERROR(TRANSACTION_AMOUNT_ZERO);
         fflush(stdout);
         success = false;
         return success;
@@ -60,7 +61,7 @@ bool transfer(const char from[USERNAME_BUFFER])
     write_field_prompt(transfer_to, "Name To Transfer to", USERNAME_BUFFER, 20);
     if (strcmp(whom_transfering.name, transfer_to) == 0)
     {
-        printf(SELF_TRANSFER_ERROR);
+        PRINT_ERROR(SELF_TRANSFER_ERROR);
         fflush(stdout);
         success = false;
         return success;
@@ -69,7 +70,7 @@ bool transfer(const char from[USERNAME_BUFFER])
     scanf("%d", &amount);
     if (whom_transfering.amount < amount)
     {
-        printf(AMOUNT_TOO_HIGH);
+        PRINT_ERROR(AMOUNT_TOO_HIGH);
         fflush(stdout);
         success = false;
         return success;
@@ -78,7 +79,7 @@ bool transfer(const char from[USERNAME_BUFFER])
     FILE *temp = fopen("db/users_temp.txt", "w");
     if (users == NULL || temp == NULL)
     {
-        printf(FILE_NOT_FOUND);
+        PRINT_ERROR(FILE_NOT_FOUND);
     };
     // person how'll get rich
     Person current_user = {0};
@@ -121,7 +122,7 @@ bool transfer(const char from[USERNAME_BUFFER])
     }
     if (!success)
     {
-        printf(USER_NOT_FOUND);
+        PRINT_ERROR(USER_NOT_FOUND);
         fflush(stdout);
     }
     else
@@ -138,7 +139,7 @@ bool transfer(const char from[USERNAME_BUFFER])
         char transaction_date_buffer[64];
         strftime(transaction_date_buffer, sizeof(transaction_date_buffer), "%Y-%m-%d %H:%M:%S", local_time);
         fprintf(transactions, WRITE_TRANSACTION, from, transfer_to, amount, transaction_date_buffer);
-        printf(USER_TRANSFERRED, amount, transfer_to);
+        PRINT_SUCCESS(USER_TRANSFERRED, amount, transfer_to);
         fflush(stdout);
         fclose(transactions);
     }
@@ -154,12 +155,12 @@ void view_balance(char username[USERNAME_BUFFER])
     Person user = get_user_info(username);
     if (user.name[0] == '\0')
     {
-        printf(USER_NOT_FOUND);
+        PRINT_ERROR(USER_NOT_FOUND);
         fflush(stdout);
     }
     else
     {
-        printf(VIEW_BALANCE, user.amount);
+        PRINT_SUCCESS(VIEW_BALANCE, user.amount);
         fflush(stdout);
     };
 }

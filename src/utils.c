@@ -1,5 +1,5 @@
 #include "utils.h"
-
+#include "printf_macros.h"
 void flush_stdin()
 {
     int c = getchar();
@@ -25,7 +25,7 @@ bool write_field_prompt(
     if (fgets_field == NULL)
     {
         // User didn't enter a value;
-        printf("Enter a name %s time!\n", display_name_buffer);
+        PRINT_ERROR("Enter a name %s next time!\n", display_name_buffer);
         *field_content = '\0';
         return false;
     };
@@ -40,7 +40,7 @@ bool write_field_prompt(
     {
         // User wrote characters bigger than the buffer so there are characters left in the std input
         // that could affect the next input
-        printf("Warning: %s was truncated\n", display_name_buffer);
+        PRINT_WARRNING("Warning: %s was truncated\n", display_name_buffer);
         // Clear remaining input from stdin
         flush_stdin();
     };

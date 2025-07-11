@@ -2,6 +2,7 @@
 #include "auth.h"
 #include "error_messages.h"
 #include "success_messages.h"
+#include "printf_macros.h"
 AuthResult login(char username[USERNAME_BUFFER], char password[PASSWORD_BUFFER])
 {
     AuthResult login = {0};
@@ -38,16 +39,17 @@ void save_user(const Person *person)
     FILE *file = fopen("db/users.txt", "a");
     if (file == NULL)
     {
-        printf(SAVE_USER_ERROR);
+        PRINT_ERROR(SAVE_USER_ERROR);
         return;
     };
     int does_user_exist_result = does_user_exist(person->name);
     if (does_user_exist_result)
     {
-        printf(USERNAME_TAKEN);
+
+        PRINT_ERROR(USERNAME_TAKEN);
         return;
     }
     fprintf(file, WRITE_USER, person->name, person->password, person->age, 0);
-    printf(USER_SAVED);
+    PRINT_SUCCESS(USER_SAVED);
     fclose(file);
 };

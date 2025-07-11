@@ -7,12 +7,6 @@
 #define USERNAME_BUFFER 31
 #define PASSWORD_BUFFER 51
 #define USER_FIELDS_NUMBER 4
-#define RESET "\033[0m"
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define YELLOW "\033[33m"
-#define CYAN "\033[36m"
-#define BOLD "\033[1m"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>

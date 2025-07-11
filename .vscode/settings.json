@@ -6,6 +6,8 @@
         "utils.h": "c",
         "auth.h": "c",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "main.h": "c",
+        "printf_macros.h": "c"
     }
 }

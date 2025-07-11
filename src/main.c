@@ -3,14 +3,13 @@ int main()
 {
     int keep_running = true;
     char option;
-    char name[USERNAME_BUFFER] = "mohammed";
-    char password[PASSWORD_BUFFER] = "password";
+    char name[USERNAME_BUFFER];
+    char password[PASSWORD_BUFFER];
     printf("Welcome to the bank system\n");
     while (keep_running)
     {
         sleep(1);
         print_options();
-        fflush(stdout);
         scanf(" %c", &option);
 
         switch (option)
@@ -20,7 +19,7 @@ int main()
             flush_stdin();
             if (user_logged_in(name))
             {
-                printf(USER_LOGGED_IN_ERROR);
+                PRINT_ERROR(USER_LOGGED_IN_ERROR);
                 continue;
             }
             write_field_prompt(name, "name", USERNAME_BUFFER, 5);
@@ -28,11 +27,11 @@ int main()
             AuthResult login_result = login(name, password);
             if (login_result.is_valid)
             {
-                printf(USER_LOGGED_IN, name, password);
+                PRINT_SUCCESS(USER_LOGGED_IN, name, password);
             }
             else
             {
-                printf(LOGIN_ERROR, name, password);
+                PRINT_ERROR(LOGIN_ERROR, name, password);
             }
             break;
         case 'R':
@@ -44,7 +43,7 @@ int main()
             }
             else
             {
-                printf(REGISTER_ERROR);
+                PRINT_ERROR(REGISTER_ERROR);
             };
             break;
         case 'V':
@@ -57,16 +56,16 @@ int main()
             keep_running = false;
             exit(0);
         default:
-            printf(INVALID_OPTION);
+            PRINT_ERROR(INVALID_OPTION);
             break;
         }
     }
 }
 void print_line(const char *line)
 {
-    printf("                    %s", line); // center padding
-    fflush(stdout);                         // make sure it's printed immediately
-    usleep(100000);                         // 100ms
+    printf("%s", line);
+    fflush(stdout);
+    usleep(100000); // 100ms
 }
 void print_options()
 {
