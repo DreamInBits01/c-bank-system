@@ -77,7 +77,7 @@ void print_options()
     print_line("|     Option      |       Action         |\n");
     print_line("+-----------------+----------------------+\n" RESET);
     print_line("| " YELLOW "L" RESET "               | " GREEN "Login" RESET "                |\n");
-    print_line("| " YELLOW "G" RESET "               | " GREEN "Logout" RESET "                |\n");
+    print_line("| " YELLOW "G" RESET "               | " GREEN "Logout" RESET "               |\n");
     print_line("| " YELLOW "R" RESET "               | " GREEN "Register" RESET "             |\n");
     print_line("| " YELLOW "D" RESET "               | " GREEN "Deposit" RESET "              |\n");
     print_line("| " YELLOW "V" RESET "               | " GREEN "View Balance" RESET "         |\n");
