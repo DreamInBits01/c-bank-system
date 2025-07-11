@@ -10,6 +10,7 @@
 #define USER_LOGGED_IN_ERROR "You are already logged in!\n"
 #define USER_NOT_FOUND_ERROR "User not found \\:\n"
 #define SAVE_USER_ERROR "Error while saving the user...\n"
+#define CREDENTAILS_ERROR "Please check your credentails!\n"
 // TRANSACTION ERRORS
 #define TRANSACTION_AMOUNT_ZERO "Amount cannot be zero!\n"
 #define SELF_TRANSFER_ERROR "You cannot transfer to yourself \\:\n"

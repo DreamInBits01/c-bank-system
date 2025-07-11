@@ -5,6 +5,7 @@ int main()
     char option;
     char name[USERNAME_BUFFER];
     char password[PASSWORD_BUFFER];
+    bool is_user_logged_in = false;
     printf("Welcome to the bank system\n");
     while (keep_running)
     {
@@ -28,11 +29,15 @@ int main()
             if (login_result.is_valid)
             {
                 PRINT_SUCCESS(USER_LOGGED_IN, name, password);
+                is_user_logged_in = true;
             }
             else
             {
                 PRINT_ERROR(LOGIN_ERROR, name, password);
             }
+            break;
+        case 'G':
+            logout(name, password, is_user_logged_in);
             break;
         case 'R':
             printf("----Register was selected----\n");
@@ -73,6 +78,7 @@ void print_options()
     print_line("|     Option      |       Action         |\n");
     print_line("+-----------------+----------------------+\n" RESET);
     print_line("| " YELLOW "L" RESET "               | " GREEN "Login" RESET "                |\n");
+    print_line("| " YELLOW "G" RESET "               | " GREEN "Logout" RESET "                |\n");
     print_line("| " YELLOW "R" RESET "               | " GREEN "Register" RESET "             |\n");
     print_line("| " YELLOW "D" RESET "               | " GREEN "Deposit" RESET "              |\n");
     print_line("| " YELLOW "V" RESET "               | " GREEN "View Balance" RESET "         |\n");

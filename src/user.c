@@ -17,9 +17,10 @@ Person get_user_info(const char username[USERNAME_BUFFER])
 {
     FILE *users = fopen("db/users.txt", "r");
     Person person = {0};
+    bool found = false;
     if (users == NULL)
     {
-        printf("Error while opening user's file (get_user_info)");
+        PRINT_ERROR(FILE_NOT_FOUND);
         return person;
     };
     char line_buffer[256];
@@ -34,9 +35,14 @@ Person get_user_info(const char username[USERNAME_BUFFER])
             &person.amount);
         if (USER_FIELDS_NUMBER == fields_read && strcmp(person.name, username) == 0)
         {
+            found = true;
             break;
-        };
+        }
     };
+    if (!found)
+    {
+        memset(&person, 0, sizeof(person));
+    }
     fclose(users);
     return person;
 };
@@ -153,7 +159,7 @@ bool transfer(const char from[USERNAME_BUFFER])
 void view_balance(char username[USERNAME_BUFFER])
 {
     Person user = get_user_info(username);
-    if (user.name[0] == '\0')
+    if (!user.name[0])
     {
         PRINT_ERROR(USER_NOT_FOUND);
         fflush(stdout);

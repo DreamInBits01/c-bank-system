@@ -35,6 +35,7 @@ AuthResult create_user()
     return register_result;
 };
 void save_user(const Person *person)
+
 {
     FILE *file = fopen("db/users.txt", "a");
     if (file == NULL)
@@ -53,3 +54,23 @@ void save_user(const Person *person)
     PRINT_SUCCESS(USER_SAVED);
     fclose(file);
 };
+bool logout(char *username, char *password, bool is_user_logged_in)
+{
+    if (!is_user_logged_in)
+    {
+        PRINT_ERROR(USER_NOT_LOGGED_IN_ERROR);
+        return false;
+    }
+    while (*username)
+    {
+        *username = 0;
+        username++;
+    }
+    while (*password)
+    {
+        *password = 0;
+        password++;
+    };
+    PRINT_SUCCESS(USER_LOGGED_OUT);
+    return true;
+}
