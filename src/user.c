@@ -17,12 +17,12 @@ Person get_user_info(const char username[USERNAME_BUFFER])
 {
     FILE *users = fopen("db/users.txt", "r");
     Person person = {0};
-    bool found = false;
     if (users == NULL)
     {
         PRINT_ERROR(FILE_NOT_FOUND);
         return person;
     };
+    bool found = false;
     char line_buffer[256];
     while (fgets(line_buffer, sizeof(line_buffer), users))
     {
@@ -59,7 +59,6 @@ bool transfer(const char from[USERNAME_BUFFER])
         success = false;
         return success;
     }
-
     flush_stdin();
     char transfer_to[USERNAME_BUFFER];
     int amount;
@@ -73,7 +72,13 @@ bool transfer(const char from[USERNAME_BUFFER])
         return success;
     }
     printf("Enter an amount\n");
-    scanf("%d", &amount);
+    int amount_enter_result = scanf("%d", &amount);
+    if (amount_enter_result != 1 || amount <= 0)
+    {
+        PRINT_ERROR(INVALID_AMOUNT);
+        success = false;
+        return success;
+    }
     if (whom_transfering.amount < amount)
     {
         PRINT_ERROR(AMOUNT_TOO_HIGH);
@@ -85,7 +90,13 @@ bool transfer(const char from[USERNAME_BUFFER])
     FILE *temp = fopen("db/users_temp.txt", "w");
     if (users == NULL || temp == NULL)
     {
+        if (users)
+            fclose(users);
+        if (temp)
+            fclose(temp);
         PRINT_ERROR(FILE_NOT_FOUND);
+        success = false;
+        return success;
     };
     // person how'll get rich
     Person current_user = {0};
@@ -137,8 +148,9 @@ bool transfer(const char from[USERNAME_BUFFER])
         if (transactions == NULL)
         {
             printf(FILE_NOT_FOUND);
-            success = false;
             fflush(stdout);
+            success = false;
+            return success;
         }
         time_t now = time(NULL);
         struct tm *local_time = localtime(&now);
@@ -154,7 +166,7 @@ bool transfer(const char from[USERNAME_BUFFER])
     remove("db/users.txt");
     rename("db/users_temp.txt", "db/users.txt");
 
-    return true;
+    return success;
 }
 void view_balance(char username[USERNAME_BUFFER])
 {

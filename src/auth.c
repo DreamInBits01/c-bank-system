@@ -13,6 +13,7 @@ AuthResult login(char username[USERNAME_BUFFER], char password[PASSWORD_BUFFER])
     }
     else
     {
+        PRINT_ERROR(USER_NOT_FOUND);
         login.is_valid = false;
     };
     return login;
@@ -35,14 +36,7 @@ AuthResult create_user()
     return register_result;
 };
 void save_user(const Person *person)
-
 {
-    FILE *file = fopen("db/users.txt", "a");
-    if (file == NULL)
-    {
-        PRINT_ERROR(SAVE_USER_ERROR);
-        return;
-    };
     int does_user_exist_result = does_user_exist(person->name);
     if (does_user_exist_result)
     {
@@ -50,6 +44,12 @@ void save_user(const Person *person)
         PRINT_ERROR(USERNAME_TAKEN);
         return;
     }
+    FILE *file = fopen("db/users.txt", "a");
+    if (file == NULL)
+    {
+        PRINT_ERROR(SAVE_USER_ERROR);
+        return;
+    };
     fprintf(file, WRITE_USER, person->name, person->password, person->age, 0);
     PRINT_SUCCESS(USER_SAVED);
     fclose(file);

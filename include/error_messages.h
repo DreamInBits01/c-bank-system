@@ -15,6 +15,7 @@
 #define TRANSACTION_AMOUNT_ZERO "Amount cannot be zero!\n"
 #define SELF_TRANSFER_ERROR "You cannot transfer to yourself \\:\n"
 #define AMOUNT_TOO_HIGH "The amount chosen is bigger than your balance \\:\n"
+#define INVALID_AMOUNT "Invalid amount\n"
 // options errors
 #define INVALID_OPTION "Please select a valid option\n"
 

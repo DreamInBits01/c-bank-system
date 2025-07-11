@@ -12,7 +12,6 @@ int main()
         sleep(1);
         print_options();
         scanf(" %c", &option);
-
         switch (option)
         {
         case 'L':
