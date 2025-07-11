@@ -62,17 +62,23 @@ int main()
         }
     }
 }
+void print_line(const char *line)
+{
+    printf("                    %s", line); // center padding
+    fflush(stdout);                         // make sure it's printed immediately
+    usleep(100000);                         // 100ms
+}
 void print_options()
 {
-    printf("+-----------------+----------------------+\n");
-    printf("|     Option      |       Action         |\n");
-    printf("+-----------------+----------------------+\n");
-    printf("| L               | Login                |\n");
-    printf("| R               | Register             |\n");
-    printf("| D               | Deposit              |\n");
-    printf("| V               | View Balance         |\n");
-    printf("| T               | Transfer             |\n");
-    printf("| W               | Withdraw             |\n");
-    printf("| Q               | Quit                 |\n");
-    printf("+-----------------+----------------------+\n");
+    print_line(CYAN BOLD "+-----------------+----------------------+\n");
+    print_line("|     Option      |       Action         |\n");
+    print_line("+-----------------+----------------------+\n" RESET);
+    print_line("| " YELLOW "L" RESET "               | " GREEN "Login" RESET "                |\n");
+    print_line("| " YELLOW "R" RESET "               | " GREEN "Register" RESET "             |\n");
+    print_line("| " YELLOW "D" RESET "               | " GREEN "Deposit" RESET "              |\n");
+    print_line("| " YELLOW "V" RESET "               | " GREEN "View Balance" RESET "         |\n");
+    print_line("| " YELLOW "T" RESET "               | " GREEN "Transfer" RESET "             |\n");
+    print_line("| " YELLOW "W" RESET "               | " GREEN "Withdraw" RESET "             |\n");
+    print_line("| " RED "Q" RESET "               | " RED "Quit" RESET "                 |\n");
+    print_line(CYAN BOLD "+-----------------+----------------------+\n" RESET);
 }
