@@ -56,7 +56,6 @@ bool transfer(const char from[USERNAME_BUFFER])
     {
         PRINT_ERROR(TRANSACTION_AMOUNT_ZERO);
         fflush(stdout);
-        success = false;
         return success;
     }
     flush_stdin();
@@ -68,7 +67,6 @@ bool transfer(const char from[USERNAME_BUFFER])
     {
         PRINT_ERROR(SELF_TRANSFER_ERROR);
         fflush(stdout);
-        success = false;
         return success;
     }
     printf("Enter an amount\n");
@@ -76,14 +74,12 @@ bool transfer(const char from[USERNAME_BUFFER])
     if (amount_enter_result != 1 || amount <= 0)
     {
         PRINT_ERROR(INVALID_AMOUNT);
-        success = false;
         return success;
     }
     if (whom_transfering.amount < amount)
     {
         PRINT_ERROR(AMOUNT_TOO_HIGH);
         fflush(stdout);
-        success = false;
         return success;
     }
     FILE *users = fopen("db/users.txt", "r");
@@ -95,7 +91,6 @@ bool transfer(const char from[USERNAME_BUFFER])
         if (temp)
             fclose(temp);
         PRINT_ERROR(FILE_NOT_FOUND);
-        success = false;
         return success;
     };
     // person how'll get rich
@@ -149,7 +144,6 @@ bool transfer(const char from[USERNAME_BUFFER])
         {
             printf(FILE_NOT_FOUND);
             fflush(stdout);
-            success = false;
             return success;
         }
         time_t now = time(NULL);
@@ -181,4 +175,77 @@ void view_balance(char username[USERNAME_BUFFER])
         PRINT_SUCCESS(VIEW_BALANCE, user.amount);
         fflush(stdout);
     };
+}
+
+bool deposit(char username[USERNAME_BUFFER], bool is_user_logged_in)
+{
+    bool success = false;
+    if (!is_user_logged_in)
+    {
+        PRINT_ERROR(USER_NOT_FOUND);
+        fflush(stdout);
+        return success;
+    };
+    int amount;
+    printf("Enter an amount\n");
+    int amount_enter_result = scanf("%d", &amount);
+    if (amount_enter_result != 1 || amount <= 0)
+    {
+        PRINT_ERROR(INVALID_AMOUNT);
+        fflush(stdout);
+        return success;
+    }
+    FILE *users = fopen("db/users.txt", "r");
+    FILE *users_temp = fopen("db/users_temp.txt", "w");
+    if (users == NULL || users_temp == NULL)
+    {
+        if (users)
+            fclose(users);
+        if (users_temp)
+            fclose(users_temp);
+        PRINT_ERROR(FILE_NOT_FOUND);
+    }
+    char line_buffer[256];
+    Person current_user = {0};
+    while (fgets(line_buffer, sizeof(line_buffer), users))
+    {
+        int fields_read = sscanf(
+            line_buffer,
+            READ_USER,
+            current_user.name,
+            current_user.password,
+            &current_user.age,
+            &current_user.amount);
+        if (fields_read == USER_FIELDS_NUMBER && strcmp(username, current_user.name) == 0)
+        {
+            int new_amount = current_user.amount + amount;
+            fprintf(
+                users_temp,
+                WRITE_USER,
+                current_user.name,
+                current_user.password,
+                current_user.age,
+                new_amount);
+            success = true;
+        }
+        else
+        {
+            fputs(line_buffer, users_temp);
+        }
+    }
+
+    if (success)
+    {
+        PRINT_SUCCESS(USER_DEPOSITED, amount);
+        fflush(stdout);
+    }
+    else
+    {
+        printf("some error\n");
+    }
+    fclose(users_temp);
+    fclose(users);
+    remove("db/users.txt");
+    rename("db/users_temp.txt", "db/users.txt");
+    return success;
 }

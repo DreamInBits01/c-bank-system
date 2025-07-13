@@ -8,7 +8,7 @@
 // Transactions
 #define VIEW_BALANCE "Your balance is %d\n"
 #define USER_AMOUNT_UPDATED "User amount was updated successfully!\n"
-#define USER_DEPOSITED "User deposited money successfully!\n"
+#define USER_DEPOSITED "User deposited the amount:%d successfully!\n"
 #define USER_WITHDRAWN "User withdrew money successfully!\n"
 #define USER_TRANSFERRED "Success! Amount:%d was transfered to:%s!\n"
 #define USER_VIEWED_TRANSACTIONS "User viewed transactions successfully!\n"

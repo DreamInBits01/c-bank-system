@@ -11,7 +11,7 @@ int main()
     {
         sleep(1);
         print_options();
-        flush_stdin();
+        // flush_stdin();
         scanf(" %c", &option);
         switch (option)
         {
@@ -55,6 +55,9 @@ int main()
             {
                 PRINT_ERROR(REGISTER_ERROR);
             };
+            break;
+        case 'D':
+            deposit(name, is_user_logged_in);
             break;
         case 'V':
             view_balance(name);
