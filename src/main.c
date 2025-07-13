@@ -11,11 +11,12 @@ int main()
     {
         sleep(1);
         print_options();
+        flush_stdin();
         scanf(" %c", &option);
         switch (option)
         {
         case 'L':
-            printf("----Login was selected----\n");
+            printf(GREEN "----Login was selected----\n" RESET);
             flush_stdin();
             if (user_logged_in(name))
             {
@@ -40,6 +41,11 @@ int main()
             break;
         case 'R':
             printf("----Register was selected----\n");
+            if (user_logged_in(name))
+            {
+                PRINT_ERROR(USER_LOGGED_IN_ERROR);
+                continue;
+            }
             AuthResult create_user_result = create_user();
             if (create_user_result.is_valid)
             {
